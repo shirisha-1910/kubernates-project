@@ -4,9 +4,10 @@ Deploying frontend and backend applications on Amazon Elastic Kubernetes Service
 Build Docker images for frontend and backend applications.Through Dockerfiles.
 Build the frontend image
            docker build -t frontend-app:v1.0 .
-
 Build the backend image
          docker build -t backend-app:v1.0 .
+     ![output](IMAGES2/front.png)   
+     ![output](IMAGES2/back.png)
 ## 2. Set Up Amazon ECR
 Create ECR Repositories:create a repositories through aws cli or through console.
 Authenticate Docker to Your ECR:
@@ -20,10 +21,14 @@ Obtain an authentication token and log in to ECR registry:
 #backend
              docker tag backend-app:v1.0 905418202800.dkr.ecr.ap-south-1.amazonaws.com/backend-app:v1.0
              docker push 905418202800.dkr.ecr.ap-south-1.amazonaws.com/backend-app:v1.0
+             ![output](IMAGES2/ecrrepo.png)
+             ![output](IMAGES2/img.png)
 ## 3. Configure Amazon EKS
 1. Create EKS Cluster: Follow documentation or use the AWS Management Console to create an EKS cluster.    
 2. Update kubeconfig: Ensure your kubectl is configured to interact with your EKS cluster.
+   ![output](IMAGES2/ngrp.png)
               aws eks update-kubeconfig --region ap-south-1 --name cluster
+   ![output](IMAGES2/cluster.png)
 ## 4. Create Kubernetes Manifests
 Namespaces
 create 2 different namespace for frontend and backend applications.   
@@ -44,15 +49,22 @@ targetPort: 3000: The port on the container to which traffic is forwarded. This 
 
 ## Backend Deployment YAML
 Create a deployment manifest for backend application. Save this as backend-deployment.yaml:
+![output](IMAGES2/lb.png)
 
 ## 5. Apply Kubernetes Manifests
 Deploy frontend and backend applications in EKS using kubectl:
 #Deploy frontend application
     kubectl apply -f frontend-deployment.yaml
+    ![output](IMAGES2/frontpod.png)
 
 #Deploy backend application
        kubectl apply -f backend-deployment.yaml
+       ![output](IMAGES2/backpod.png)
 ## 6. Access Applications
 After deployment, frontend service will be exposed via a Load Balancer. Retrieve the external DNS name for the frontend service:
      kubectl get svc frontend-service -n zn
+     ![output](IMAGES2/lbsvc.png)
+     ![output](IMAGES2/backlbsvc.png)
 EXTERNAL-IP field in the output. This is the DNS name that you can use to access your frontend application.
+![output](IMAGES2/out1.png)
+![output](IMAGES2/output2.png)
