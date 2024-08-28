@@ -3,7 +3,7 @@ Deploying frontend and backend applications on Amazon Elastic Kubernetes Service
 ## 1. Build Docker Images
 Build Docker images for frontend and backend applications.Through Dockerfiles.
 Build the frontend image
-                        docker build -t frontend-app:v1.0 .
+                        - docker build -t frontend-app:v1.0 .
 Build the backend image
                   docker build -t backend-app:v1.0 .
 ![output](IMAGES2/front.png)   
