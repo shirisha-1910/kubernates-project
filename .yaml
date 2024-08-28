@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fns
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fns
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+  namespace: fns
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+      - name: frontend-app
+        image: 905418202800.dkr.ecr.ap-south-1.amazonaws.com/frontend-app:v1.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_BACKEND_URL
+          value: "http://a988dec2106ce46928bc338763519485-1592313788.ap-south-1.elb.amazonaws.com"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-app-service
+  namespace: fns
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend-app
+  ports:
+  - port: 80
+    targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app
+  namespace: zn
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+      - name: backend-app
+        image: 905418202800.dkr.ecr.ap-south-1.amazonaws.com/backend-app:v1.0
+        ports:
+        - containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-app-service
+  namespace: zn
+spec:
+  type: LoadBalancer
+  selector:
+    app: backend-app
+  ports:
+    - protocol: TCP
+      port: 80  # The port on which the service will be exposed
+      targetPort: 9009  # The port on which the container is listening
+
