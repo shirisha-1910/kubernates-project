@@ -67,4 +67,4 @@ After deployment, frontend service will be exposed via a Load Balancer. Retrieve
 ![output](IMAGES2/backlbsvc.png)
 EXTERNAL-IP field in the output. This is the DNS name that you can use to access your frontend application.
 ![output](IMAGES2/out1.png)
-![output](IMAGES2/output2.png)
+![output](IMAGES2/output2.png) .
