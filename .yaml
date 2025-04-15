@@ -78,5 +78,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80  # The port on which the service will be exposed
-      targetPort: 9009  # The port on which the container is listening
+      targetPort: 9009  # The port on which the container is listening.
 
